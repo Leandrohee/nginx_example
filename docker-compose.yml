@@ -1,0 +1,24 @@
+services:
+  main_nginx_service:
+    build:
+      context: ./main_nginx
+      dockerfile: Dockerfile
+    container_name: main_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./ssl:/etc/nginx/ssl:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway" #this only work on mac
+    #network_mode: host  #this only work on linux
+
+  local_nginx_service:
+    build:
+      context: ./local_nginx
+      dockerfile: Dockerfile
+    container_name: local_nginx
+    depends_on:
+      - main_nginx_service
+    ports:
+      - "2000:4000"
