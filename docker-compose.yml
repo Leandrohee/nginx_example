@@ -22,3 +22,18 @@ services:
       - main_nginx_service
     ports:
       - "2000:4000"
+    networks:
+      - nginx_local
+
+
+  python_server_service:
+    build:
+      context: ./python_server
+      dockerfile: Dockerfile
+    container_name: local_python_server
+    networks:
+      - nginx_local
+
+networks:
+  nginx_local:
+    driver: bridge
