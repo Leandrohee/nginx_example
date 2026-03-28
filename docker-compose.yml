@@ -9,9 +9,9 @@ services:
       - "443:443"
     volumes:
       - ./ssl:/etc/nginx/ssl:ro
-    extra_hosts:
-      - "host.docker.internal:host-gateway" #this only work on mac
-    #network_mode: host  #this only work on linux
+    # extra_hosts:                            # this is for mac
+    #   - "host.docker.internal:host-gateway" # this is for mac
+    network_mode: host  # this is for linux
 
   local_nginx_service:
     build:
