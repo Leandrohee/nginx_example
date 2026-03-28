@@ -14,7 +14,10 @@ Arquivos:
 ### 2. Rodar o comando para subir os 3 containers
 
 ```bash
+docker compose build --no-cache 
 docker compose up -d
+
+docker compose down -v # Se quiser derrubar tudo
 ```
 
 ```ini
@@ -29,4 +32,6 @@ CONTAINER ID   IMAGE                                 COMMAND                  CR
 
 ```bash
 https://localhost/banana/
+
+https://localhost/python/user/42
 ```

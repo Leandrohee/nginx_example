@@ -13,6 +13,7 @@ services:
     #   - "host.docker.internal:host-gateway" # this is for mac
     network_mode: host  # this is for linux
 
+
   local_nginx_service:
     build:
       context: ./local_nginx
@@ -26,6 +27,19 @@ services:
       - nginx_local
 
 
+  python_reverse_proxy:
+    build:
+      context: ./python_server/nginx
+      dockerfile: Dockerfile
+    container_name: local_python_reverse_proxy
+    depends_on:
+      - main_nginx_service
+    ports:
+      - "2002:4000"
+    networks:
+      - nginx_local
+
+
   python_server_service:
     build:
       context: ./python_server
@@ -33,6 +47,7 @@ services:
     container_name: local_python_server
     networks:
       - nginx_local
+
 
 networks:
   nginx_local:
