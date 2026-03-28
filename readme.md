@@ -51,5 +51,7 @@ CONTAINER ID   IMAGE                                 COMMAND                  CR
 ```bash
 https://localhost/banana/
 
+https://localhost/banana/backend/user/22
+
 https://localhost/python/user/42
 ```
