@@ -1,5 +1,23 @@
 # Simulando o main_ngix dos sitemas em local host
 
+## Funcionamento do projeto
+
+1. Pasta main_nginx:
+É o proxy reverso principal do projeto.
+Roteia para os proxy reversos locais
+
+2. Pasta local_nginx:
+Funciona como um proxy reverso local roteia para:
+ * um texto simples (https://localhost/banana/)
+ * para o servidor backend python (https://localhost/banana/backend/user/22)
+
+3. Pasta python server:
+Tem o servidor python simples e seu próprio proxy reverso
+    (https://localhost/python/user/22)
+
+4. docker-compose.yml:
+Arquivo de configuracao do exemplo
+
 ## Startando o projecto com docker-compose.yml
 
 ### 1. Arrumar a configuracao para linux ou mac
