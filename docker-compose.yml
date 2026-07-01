@@ -9,25 +9,25 @@ services:
       - "443:443"
     volumes:
       - ./ssl:/etc/nginx/ssl:ro
-    # extra_hosts:                            # this is for mac
-    #   - "host.docker.internal:host-gateway" # this is for mac
-    network_mode: host  # this is for linux
+    extra_hosts:                            # this is for mac
+      - "host.docker.internal:host-gateway" # this is for mac
+    # network_mode: host  # this is for linux
 
 
-  local_nginx_service:
+  banana_nginx_service:
     build:
-      context: ./local_nginx
+      context: ./banana_nginx
       dockerfile: Dockerfile
-    container_name: local_nginx
+    container_name: banana_nginx
     depends_on:
       - main_nginx_service
     ports:
       - "2000:4000"
     networks:
-      - nginx_local
+      - nginx_network
 
 
-  python_reverse_proxy:
+  python_reverse_proxy_service:
     build:
       context: ./python_server/nginx
       dockerfile: Dockerfile
@@ -37,7 +37,7 @@ services:
     ports:
       - "2002:4000"
     networks:
-      - nginx_local
+      - nginx_network
 
 
   python_server_service:
@@ -46,9 +46,28 @@ services:
       dockerfile: Dockerfile
     container_name: local_python_server
     networks:
-      - nginx_local
+      - nginx_network
 
+  node_reverse_proxy_service:
+    build:
+      context: ./node_server/nginx
+      dockerfile: Dockerfile
+    container_name: local_node_reverse_proxy
+    depends_on:
+      - main_nginx_service
+    ports:
+      - "2001:4000"
+    networks:
+      - nginx_network
+
+  node_server_service:
+    build:
+      context: ./node_server
+      dockerfile: Dockerfile
+    container_name: local_node_server
+    networks:
+      - nginx_network
 
 networks:
-  nginx_local:
+  nginx_network:
     driver: bridge
